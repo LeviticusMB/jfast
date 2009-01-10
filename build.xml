@@ -1,0 +1,27 @@
+<project name="jfast" default="dist">
+
+    <property name="version" value="1.0" />    
+    <property name="build"   value="build" />
+    <property name="source"  value="source" />
+    <property name="dist"    value="dist" />
+        
+    <!-- clean build data -->
+    <target name="clean">
+        <delete dir="${build}" />
+        <delete dir="${dist}" />
+    </target>    
+    
+    <!-- compile -->
+    <target name="compile">
+        <mkdir dir="${build}" />
+        <javac srcdir="${source}" destdir="${build}" />
+    </target>
+    
+    <!-- create jar -->
+    <target name="dist" depends="compile">
+        <mkdir dir="${dist}" />
+        <jar destfile="${dist}/${ant.project.name}-${version}.jar" 
+            basedir="${build}" />
+    </target>
+
+</project>

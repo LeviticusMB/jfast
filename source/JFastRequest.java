@@ -98,6 +98,11 @@ public class JFastRequest
         message = new JFastMessage(JFast.VERSION,JFast.END_REQUEST,requestId);
         message.setContent(createEndRequestBody(0,JFast.REQUEST_COMPLETE));        
         message.write(output);
+
+	// Close streams and socket
+	try { output.close(); } catch (IOException ex) {}
+	try { input.close();  } catch (IOException ex) {}
+	try { socket.close(); } catch (IOException ex) {}
     }
     
     private byte[] createEndRequestBody(int applicationStatus,

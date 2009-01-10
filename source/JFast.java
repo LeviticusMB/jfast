@@ -36,7 +36,16 @@ public class JFast
         throws IOException, JFastException
     {
         Socket requestSocket = socket.accept();
-        return new JFastRequest(requestSocket);
+	try {
+	    JFastRequest req = new JFastRequest(requestSocket);
+	    requestSocket = null;
+	    return req;
+	}
+	finally {
+	    if (requestSocket != null) {
+	        requestSocket.close();
+	    }
+	}
     }    
     
     

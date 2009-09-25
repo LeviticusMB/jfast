@@ -48,9 +48,9 @@ public class JFast
 	}
     }    
     
-    
-    
-    
+    public void close() {
+        try { socket.close(); } catch (Exception ex) {}
+    }
     
     
     

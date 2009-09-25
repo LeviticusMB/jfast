@@ -1,6 +1,6 @@
 <project name="jfast" default="dist">
 
-    <property name="version" value="1.0lcs1" />    
+    <property name="version" value="1.0lcs2" />    
     <property name="build"   value="build" />
     <property name="source"  value="source" />
     <property name="dist"    value="dist" />

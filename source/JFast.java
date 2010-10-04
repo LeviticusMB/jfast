@@ -32,6 +32,11 @@ public class JFast
         }
     }        
     
+    public Socket accept()
+      throws IOException {
+      return socket.accept();
+    }
+
     public JFastRequest acceptRequest()
         throws IOException, JFastException
     {

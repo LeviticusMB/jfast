@@ -18,24 +18,29 @@ public class JFastOutput extends OutputStream
     public void write(byte buffer[],int offset,int length)
         throws IOException
     {    
-        // wrap our data in a JFastMessage and send it back
-        // to the server.
-        byte content[];
-        if(offset == 0 && length == buffer.length)
-        {
-            content = buffer;
-        }
-        else
-        {
-            content = new byte[length];
-            System.arraycopy(buffer,offset,content,0,length);
-        }
+        for (int o = offset, l = Math.min(length, JFast.MAX_LENGTH);
+	     l != 0 && o + l <= offset + length;
+	     o += l, l = Math.min(offset + length - o, JFast.MAX_LENGTH))
+	{
+	    // wrap our data in a JFastMessage and send it back
+	    // to the server.
+	    byte content[];
+	    if(o == 0 && l == buffer.length)
+	    {
+		content = buffer;
+	    }
+	    else
+	    {
+		content = new byte[l];
+		System.arraycopy(buffer,o,content,0,l);
+	    }
         
-        // wrap data in a message and then send it
-        JFastMessage message = new JFastMessage(JFast.VERSION,
-            getMessageType(),requestId);
-        message.setContent(content);        
-        message.write(output);
+	    // wrap data in a message and then send it
+	    JFastMessage message = new JFastMessage(JFast.VERSION,
+                getMessageType(),requestId);
+	    message.setContent(content);
+	    message.write(output);
+	}
     }
     
     public void write(byte buffer[])
